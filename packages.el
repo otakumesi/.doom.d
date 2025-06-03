@@ -52,8 +52,8 @@
 (package! copilot
   :recipe (:host github :repo "copilot-emacs/copilot.el" :files ("*.el" "dist")))
 
-(package! pyvenv
-  :recipe (:host github :repo "jorgenschaefer/pyvenv" :files ("*.el")))
+;; (package! pyvenv
+;;   :recipe (:host github :repo "jorgenschaefer/pyvenv" :files ("*.el")))
 
 (package! prism
   :recipe (:host github :repo "alphapapa/prism.el" :files ("*.el")))
@@ -62,6 +62,24 @@
 (package! sequential-command)
 
 (package! emmet-mode)
+
+(package! mistty)
+(package! jupyter)
+
+(package! llm)
+(package! ellama)
+(package! gptel)
+
+(package! obsidian)
+(package! ess)
+
+;; (package! eat)
+;; k(package! transient)
+;; (package! claude-code
+;;   :recipe (:host github
+;;            :repo "stevemolitor/claude-code.el"
+;;            :branch "main"
+;;            :files ("*.el" (:exclude "demo.gif"))))
 
 ;; (package! prism
 ;;   :recipe (:host github :repo "alphapapa/prism.el" :files ("*.el")))

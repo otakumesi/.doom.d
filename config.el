@@ -75,8 +75,13 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-(which-function-mode +1)
+(setq lsp-rust-analyzer-server-command '("~/.local/bin/rust-analyzer" "rust-analyzer"))
+(setq lsp-rust-analyzer-store-path "~/.local/bin/rust-analyzer")
+
+;; (which-function-mode +1)
 (setq completion-ignore-case t)
+(setq undo-tree-enable-undo-in-region nil)
+
 
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
@@ -109,3 +114,50 @@
   :hook (html-mode . emmet-mode)
   :hook (js-mode . emmet-mode)
   :hook (typescript-mode . emmet-mode))
+
+(use-package! mistty
+  :bind (("C-c s" . mistty)
+
+         ;; bind here the shortcuts you'd like the
+         ;; shell to handle instead of Emacs.
+         :map mistty-prompt-map
+
+         ;; fish: directory history
+         ("M-<up>" . mistty-send-key)
+         ("M-<down>" . mistty-send-key)
+         ("M-<left>" . mistty-send-key)
+         ("M-<right>" . mistty-send-key)))
+
+(use-package! tramp
+  :config
+  ;; (tramp-default-method . "sshx")
+  (add-to-list 'tramp-remote-path 'tramp-own-remote-path))
+
+(use-package! llm
+  :init
+  (require 'llm-openai)
+  (setq llm-refactoring-provider (make-llm-openai :key (getenv "EMACS_OPENAI_API_KEY") :chat-model "gpt-4o-mini" :embedding-model "text-embedding-3-small")))
+
+(use-package! ellama
+  :init
+  (setopt ellama-keymap-prefix "C-c e")
+  (setopt ellama-language "Japanese")
+  (require 'llm-openai)
+  (setopt ellama-provider (make-llm-openai :key (getenv "EMACS_OPENAI_API_KEY") :chat-model "gpt-4o-mini" :embedding-model "text-embedding-3-small")))
+
+(use-package! ess
+  :init
+  (require 'ess-site))
+
+(use-package! gptel
+  :init
+  (setq gptel-api-key (getenv "EMACS_ANTHROPIC_API_KEY"))
+  :config
+  (gptel-make-anthropic "Claude" :stream t :key gptel-api-key))
+
+;; (use-package! transient)
+;; (use-package! claude-code
+;;   :bind ("C-c c" . claude-code-command-map)
+;;   :hook ((claude-code--start . sm-setup-claude-faces))
+;;   :config
+;;   (setq claude-code-program "/usr/local/bin/claude"))
